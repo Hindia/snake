@@ -1,0 +1,28 @@
+*{
+	padding:5px;
+	margin:10px;
+}
+body{
+	background-color:white;
+}
+
+td{
+	width:15px;
+	height:2px;
+}
+
+.blank{
+	background-color:white;
+}
+
+.snake{
+	background-color:gray;
+}
+
+.wall{
+	background-color:red;
+}
+
+.fruit{
+	background-color:green;
+}

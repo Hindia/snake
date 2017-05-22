@@ -7,6 +7,7 @@ var interval=100;
 var increment=1;
 
 //game variables
+var length=0;
 var tailX=[snakeX];
 var tailY=[snakeY];
 var fX;
@@ -54,7 +55,7 @@ function get(x,y){
 }
 
 function setType(x,y,value){
-	if(x != null && y != null) 
+	if(get(x,y) != null ) 
 		get(x,y).setAttribute("class",value);
 }
 
@@ -101,6 +102,7 @@ function gameLoop(){
 
 function update(){
 	setType(fX, fY, "fruit");
+	updateTail();
 	setType(tailX[length], tailY[length], "blank");
 	if(direction==2) snakeY--;
 	else if (direction==-2) snakeY++;

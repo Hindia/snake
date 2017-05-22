@@ -11,7 +11,7 @@ var tailX=[snakeX];
 var tailY=[snakeY];
 var fX;
 var fY;
-var running;
+var running=false;
 var gameOver;
 var direction=1;//right 1, left -1, down -2, up +2
 var int;

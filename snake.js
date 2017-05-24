@@ -3,7 +3,7 @@ var snakeX=2;
 var snakeY=2;
 var height=20;
 var width=24;
-var interval=100;
+var speed=100;
 var increment=2;
 
 //game variables
@@ -21,25 +21,26 @@ var int;
 //entry point of the game
 function run(){
 	init();
-	int=setInterval(gameLoop,interval);
+	int=setInterval(gameLoop,speed);
 }
 
+//initializing the game
 function init(){
 	createMap();
 	createSnake();
 	createFruit();
 }
 
-//generates the map for the snakeX
+//generates the map for the snake
 function createMap(){
 	document.write("<table>");
 	for(var y = 0;y < height;y++){
 		document.write("<tr>");
 		for(var x = 0;x < width;x++){
 			if(x == 0 || x == width-1 || y == 0 || y == height-1)
-				document.write("<td class='wall' id='"+x+ "-" +y+"'></td>");
+				document.write("<td class='wall' id='"+x+ "-" +y+"'></td>");	//marks the wall with red table cells
 			else
-				document.write("<td class='blank' id='"+x+ "-" +y+"'></td>");
+				document.write("<td class='blank' id='"+x+ "-" +y+"'></td>");	//marks the inside with black(color for blank set in css file) table cells
 		}
 		document.write("</tr>");	
 	}
@@ -51,10 +52,12 @@ function createSnake(){
 	setType(snakeX,snakeY,"snake");
 }
 
+//gets the x y coordinate values
 function get(x,y){
 	return document.getElementById(x+ "-" +y);
 }
 
+//sets the type of the table cell 
 function setType(x,y,value){
 	if(get(x,y) != null ) 
 		get(x,y).setAttribute("class",value);
@@ -73,10 +76,12 @@ function createFruit(){
 	fY=fruitY;
 }
 
+//creates a random value between the min and max
 function rand(min,max){
 	return Math.floor(Math.random()*(max-min)+min);
 }
 
+//gets the type/class of the table cell at that position
 function getType(x,y){
 	return get(x,y).getAttribute("class");
 	
@@ -84,15 +89,16 @@ function getType(x,y){
 
 //setting the key listeners
 window.addEventListener("keydown", function (event){
-	//S is up, W is down, A is left and D is right
-	var key= event.code; 
-	if(direction != -2 && key == "KeyS") direction=-2;
-	else if(direction != 2 && key == "KeyW") direction=2;
-	else if(direction!= 1 && key == "KeyA")	direction=-1;
-	else if(direction!=-1 && key == "KeyD")	direction=1;
+	//W is up, S is down, A is left and D is right OR one can use the arrowkeys
+	var key= event.code;	//variable for holding the key pressed
+	if(direction != -2 && (key == "ArrowUp" || key == "KeyW")) direction=2;
+	else if(direction != 2 && (key == "ArrowDown" || key == "KeyS")) direction=-2;
+	else if(direction!= 1 && (key == "ArrowLeft" || key == "KeyA"))	direction=-1;
+	else if(direction!=-1 && (key == "ArrowRight" || key == "KeyD"))	direction=1;
 	if(!running) running=true;
 	else if(key=="Space") running=false;	//pauses the game
 }, true);
+
 
 function gameLoop(){
 	if(running && !gameOver)
@@ -103,6 +109,7 @@ function gameLoop(){
 	}
 }
 
+//constantly updates the position of the snake 
 function update(){
 	setType(fX, fY, "fruit");
 	updateTail();
@@ -113,12 +120,12 @@ function update(){
 	else if (direction==-1) snakeX--;
 	setType(snakeX,snakeY,"snake");
 	for(var i=tailX.length-1; i>= 0; i--){
-		if(snakeX == tailX[i] && snakeY == tailY[i]){
+		if(snakeX == tailX[i] && snakeY == tailY[i]){	//if it hits/eats itself
 			gameOver=true;
 			break;
 		}
 	}
-	if (snakeX == 0 || snakeX == width-1 || snakeY == 0 || snakeY == height-1)
+	if (snakeX == 0 || snakeX == width-1 || snakeY == 0 || snakeY == height-1)	//if it hits the wall 
 		gameOver=true;
 	else if(snakeX == fX && snakeY==fY){
 		score+=2;
@@ -129,6 +136,7 @@ function update(){
 	document.getElementById("score").innerHTML = "Score: "+ score;
 }
 
+//updates the position of the tail of the snake
 function updateTail(){
 	for(var i=length; i>0 ;i--){
 		tailX[i]=tailX[i-1];

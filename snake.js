@@ -1,8 +1,8 @@
 //settings
 var snakeX=2;
 var snakeY=2;
-var height=30;
-var width=30;
+var height=20;
+var width=24;
 var interval=100;
 var increment=2;
 
@@ -84,21 +84,23 @@ function getType(x,y){
 
 //setting the key listeners
 window.addEventListener("keydown", function (event){
-	//if arrow up is key direction is up and so on
+	//S is up, W is down, A is left and D is right
 	var key= event.code; 
 	if(direction != -2 && key == "KeyS") direction=-2;
 	else if(direction != 2 && key == "KeyW") direction=2;
 	else if(direction!= 1 && key == "KeyA")	direction=-1;
 	else if(direction!=-1 && key == "KeyD")	direction=1;
 	if(!running) running=true;
-	else if(key==32) running=false;	
+	else if(key=="Space") running=false;	//pauses the game
 }, true);
 
 function gameLoop(){
 	if(running && !gameOver)
 		update();
-	else if (gameOver)
+	else if (gameOver){
 		clearInterval(int);
+		window.alert("GAME OVER! Score= "+ score);	
+	}
 }
 
 function update(){

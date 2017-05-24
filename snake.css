@@ -3,16 +3,16 @@
 	margin:10px;
 }
 body{
-	background-color:white;
+	background-color:black;
 }
 
 td{
-	width:15px;
-	height:2px;
+	width:10px;
+	height:12px;
 }
 
 .blank{
-	background-color:white;
+	background-color:black;
 }
 
 .snake{

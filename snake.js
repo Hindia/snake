@@ -83,16 +83,16 @@ function getType(x,y){
 }
 
 //setting the key listeners
-window.addEventListener("keypress", function key(){
+window.addEventListener("keydown", function (event){
 	//if arrow up is key direction is up and so on
-	var key= KeyboardEvent.code; 
-	if(direction != -2 && key==38) direction=2;
-	else if(direction != 2 && key== 40) direction=-2;
-	else if(direction!= 1 && key == 37)	direction=-1;
-	else if(direction!=-1 && key == 39)	direction=1;
+	var key= event.code; 
+	if(direction != -2 && key == "KeyS") direction=-2;
+	else if(direction != 2 && key == "KeyW") direction=2;
+	else if(direction!= 1 && key == "KeyA")	direction=-1;
+	else if(direction!=-1 && key == "KeyD")	direction=1;
 	if(!running) running=true;
 	else if(key==32) running=false;	
-});
+}, true);
 
 function gameLoop(){
 	if(running && !gameOver)
@@ -110,12 +110,19 @@ function update(){
 	else if (direction==1) snakeX++;
 	else if (direction==-1) snakeX--;
 	setType(snakeX,snakeY,"snake");
+	for(var i=tailX.length-1; i>= 0; i--){
+		if(snakeX == tailX[i] && snakeY == tailY[i]){
+			gameOver=true;
+			break;
+		}
+	}
 	if (snakeX == 0 || snakeX == width-1 || snakeY == 0 || snakeY == height-1)
 		gameOver=true;
 	else if(snakeX == fX && snakeY==fY){
+		score+=2;
 		createFruit();
 		length+=increment;
-		score+=2;
+		
 	}
 	document.getElementById("score").innerHTML = "Score: "+ score;
 }

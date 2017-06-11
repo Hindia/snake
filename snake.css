@@ -3,7 +3,7 @@
 	margin:10px;
 }
 body{
-	background-color:black;
+	background-color:gray;
 }
 
 td{
@@ -12,11 +12,11 @@ td{
 }
 
 .blank{
-	background-color:black;
+	background-color:gray;
 }
 
 .snake{
-	background-color:gray;
+	background-color:black;
 }
 
 .wall{
